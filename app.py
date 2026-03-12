@@ -7,23 +7,21 @@ import pytesseract
 from PIL import Image
 from pdf2image import convert_from_bytes
 
-# -------------------------------
 # Tesseract path (Windows)
-# -------------------------------
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-# -------------------------------
+
 # Page config
-# -------------------------------
+
 st.set_page_config(
     page_title="AI Career Assistant",
     page_icon="🤖",
     layout="wide"
 )
 
-# -------------------------------
+
 # Utility Functions
-# -------------------------------
+
 def query_ollama(messages, model="llama3"):
     url = "http://localhost:11434/api/generate"
     prompt = ""
@@ -73,9 +71,7 @@ if "chats" not in st.session_state:
 if "last_response" not in st.session_state:
     st.session_state.last_response = ""
 
-# -------------------------------
 # Sidebar
-# -------------------------------
 st.sidebar.title("💬 Chat History")
 if st.sidebar.button("➕ New Chat"):
     st.session_state.chat_id += 1
@@ -87,9 +83,8 @@ for cid in st.session_state.chats:
     if st.sidebar.button(f"Chat {cid}", key=f"chat_{cid}"):
         st.session_state.current_chat = cid
 
-# -------------------------------
+
 # Main UI
-# -------------------------------
 st.title("🤖 AI Cover Letter & Resume Pro")
 st.caption("Generate ATS-optimized documents and analyze job fit.")
 
@@ -99,9 +94,9 @@ for msg in current_chat:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# -------------------------------
+
 # Input Form
-# -------------------------------
+
 with st.form("cover_form"):
     col1, col2 = st.columns(2)
     with col1:
@@ -121,9 +116,7 @@ with st.form("cover_form"):
     mode = st.radio("What should I generate?", ["Cover Letter", "Optimized Resume Content", "Job Fit Analysis"], horizontal=True)
     submit = st.form_submit_button("Generate Document")
 
-# -------------------------------
 # Logic & Prompt Engineering
-# -------------------------------
 if submit:
     if not all([job_title, company]) or not uploaded_files:
         st.warning("Please provide at least the Job Title, Company, and Resume.")
@@ -152,9 +145,7 @@ if submit:
         
         current_chat.append({"role": "assistant", "content": reply})
 
-# -------------------------------
 # New Features: Download & Actions
-# -------------------------------
 if st.session_state.last_response:
     st.divider()
     st.subheader("📄 Export & Actions")
@@ -168,4 +159,5 @@ if st.session_state.last_response:
         mime="text/plain",
     )
     
+
     st.info("💡 **ATS Tip:** When saving as PDF, ensure you use a standard font like Arial or Calibri and avoid tables/graphics for the highest parse rate.")
