@@ -1,0 +1,18 @@
+# Python Dependencies
+streamlit
+requests
+pypdf
+python-docx
+pytesseract
+pdf2image
+Pillow
+
+# External Tools (Install Separately)
+# Ollama - https://ollama.com
+# Install and run:
+# ollama pull llama3
+
+# Tesseract OCR
+# Install from: https://github.com/tesseract-ocr/tesseract
+# Default path (Windows):
+# C:\Program Files\Tesseract-OCR\tesseract.exe
